@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadowrun 6e - Mesa de RPG</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="matrix-rain"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="title">SHADOWRUN 6e</h1>
+            <p class="subtitle">Mesa de RPG Digital</p>
+            <div class="version">Version 1.0</div>
+        </header>
+
+        <nav class="main-nav">
+            <button class="nav-btn active" data-section="dice-calculator">
+                <span>🎲</span> Calculadora de Dados
+            </button>
+            <button class="nav-btn" data-section="character-creator">
+                <span>👤</span> Criador de Personagem
+            </button>
+            <button class="nav-btn" data-section="initiative-tracker">
+                <span>⚡</span> Rastreador de Iniciativa
+            </button>
+            <button class="nav-btn" data-section="character-list">
+                <span>📋</span> Personagens Salvos
+            </button>
+        </nav>
+
+        <!-- Calculadora de Dados -->
+        <section id="dice-calculator" class="content-section active">
+            <div class="section-header">
+                <h2>Calculadora de Dados Shadowrun 6e</h2>
+                <p>Sistema de dados com contagem automática de sucessos, glitch e critical glitch</p>
+            </div>
+
+            <div class="dice-panel">
+                <div class="input-group">
+                    <label for="dice-pool">Pool de Dados (D6):</label>
+                    <input type="number" id="dice-pool" min="1" max="50" value="5">
+                </div>
+
+                <div class="input-group">
+                    <label for="threshold">Limiar de Sucessos (opcional):</label>
+                    <input type="number" id="threshold" min="1" max="6" placeholder="5">
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="edge-use">
+                        <span class="checkmark"></span>
+                        Usar Edge (reroll 1's e 2's)
+                    </label>
+                </div>
+
+                <div class="button-group">
+                    <button id="roll-dice" class="cyber-btn primary">ROLAR DADOS</button>
+                    <button id="clear-dice" class="cyber-btn secondary">LIMPAR</button>
+                </div>
+
+                <div id="dice-results" class="results-panel" style="display: none;">
+                    <div class="result-header">
+                        <h3>Resultado</h3>
+                        <div class="result-time" id="roll-time"></div>
+                    </div>
+                    
+                    <div class="dice-display">
+                        <div class="dice-pool-display">
+                            <span class="dice-count" id="pool-count">5</span>
+                            <span class="dice-type">D6</span>
+                        </div>
+                        <div class="dice-values" id="dice-values"></div>
+                    </div>
+
+                    <div class="success-count">
+                        <span class="success-label">Sucessos:</span>
+                        <span class="success-number" id="success-count">0</span>
+                    </div>
+
+                    <div id="glitch-warning" class="glitch-info" style="display: none;">
+                        <span class="glitch-icon">⚠️</span>
+                        <span id="glitch-text">GLITCH DETECTADO</span>
+                    </div>
+
+                    <div id="critical-glitch-warning" class="critical-glitch-info" style="display: none;">
+                        <span class="glitch-icon">💥</span>
+                        <span id="critical-glitch-text">CRITICAL GLITCH!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rules-panel">
+                <h3>Regras Shadowrun 6e</h3>
+                <ul>
+                    <li><strong>Sucessos:</strong> Dados com valor 5+</li>
+                    <li><strong>Glitch:</strong> 50% ou mais dos dados são 1s (sem sucessos)</li>
+                    <li><strong>Critical Glitch:</strong> Todos os dados são 1s</li>
+                    <li><strong>Edge:</strong> Reroll dados 1s e 2s (máximo uma vez)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Criador de Personagem -->
+        <section id="character-creator" class="content-section">
+            <div class="section-header">
+                <h2>Criador de Personagem</h2>
+                <p>Defina atributos, perícias e especializações</p>
+            </div>
+
+            <div class="creator-panel">
+                <div class="input-group">
+                    <label for="character-name">Nome do Personagem:</label>
+                    <input type="text" id="character-name" placeholder="Ex: Blade Runner">
+                </div>
+
+                <!-- Atributos -->
+                <div class="attributes-section">
+                    <h3>Atributos (1-6)</h3>
+                    <div class="attributes-grid">
+                        <div class="attr-group">
+                            <label>Força</label>
+                            <input type="number" class="attr-input" data-attr="strength" min="1" max="6" value="3">
+                        </div>
+                        <div class="attr-group">
+                            <label>Agilidade</label>
+                            <input type="number" class="attr-input" data-attr="agility" min="1" max="6" value="3">
+                        </div>
+                        <div class="attr-group">
+                            <label>Reação</label>
+                            <input type="number" class="attr-input" data-attr="reaction" min="1" max="6" value="3">
+                        </div>
+                        <div class="attr-group">
+                            <label>Corpo</label>
+                            <input type="number" class="attr-input" data-attr="body" min="1" max="6" value="3">
+                        </div>
+                        <div class="attr-group">
+                            <label>Charisma</label>
+                            <input type="number" class="attr-input" data-attr="charisma" min="1" max="6" value="3">
+                        </div>
+                        <div class="attr-group">
+                            <label>Intuição</label>
+                            <input type="number" class="attr-input" data-attr="intuition" min="1" max="6" value="3">
+                        </div>
+                        <div class="attr-group">
+                            <label>Lógica</label>
+                            <input type="number" class="attr-input" data-attr="logic" min="1" max="6" value="3">
+                        </div>
+                        <div class="attr-group">
+                            <label>Vontade</label>
+                            <input type="number" class="attr-input" data-attr="willpower" min="1" max="6" value="3">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edge -->
+                <div class="edge-section">
+                    <h3>Edge</h3>
+                    <div class="edge-controls">
+                        <button class="edge-btn" data-action="decrease">-</button>
+                        <span class="edge-value" id="edge-value">1</span>
+                        <button class="edge-btn" data-action="increase">+</button>
+                        <span class="edge-max">/ 7</span>
+                    </div>
+                </div>
+
+                <!-- Perícias -->
+                <div class="skills-section">
+                    <h3>Perícias Principais</h3>
+                    <div class="skills-container">
+                        <div class="skill-row">
+                            <input type="text" class="skill-name" placeholder="Nome da perícia" data-skill="0">
+                            <input type="number" class="skill-rating" placeholder="Rating" min="0" max="12" value="0" data-skill="0">
+                            <button class="remove-skill" data-skill="0">✖</button>
+                        </div>
+                    </div>
+                    <button id="add-skill" class="cyber-btn small">+ Adicionar Perícia</button>
+                </div>
+
+                <!-- Especializações -->
+                <div class="specializations-section">
+                    <h3>Especializações</h3>
+                    <div class="specializations-container">
+                        <div class="spec-row">
+                            <input type="text" class="spec-name" placeholder="Perícia" data-spec="0">
+                            <input type="text" class="spec-area" placeholder="Área de especialização" data-spec="0">
+                            <button class="remove-spec" data-spec="0">✖</button>
+                        </div>
+                    </div>
+                    <button id="add-specialization" class="cyber-btn small">+ Adicionar Especialização</button>
+                </div>
+
+                <div class="button-group">
+                    <button id="save-character" class="cyber-btn primary">SALVAR PERSONAGEM</button>
+                    <button id="load-character" class="cyber-btn secondary">CARREGAR</button>
+                    <button id="new-character" class="cyber-btn secondary">NOVO</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rastreador de Iniciativa -->
+        <section id="initiative-tracker" class="content-section">
+            <div class="section-header">
+                <h2>Rastreador de Iniciativa</h2>
+                <p>Gerencie a ordem de iniciativa na mesa</p>
+            </div>
+
+            <div class="initiative-panel">
+                <div class="add-initiative">
+                    <input type="text" id="init-name" placeholder="Nome do personagem/NPC">
+                    <input type="number" id="init-value" placeholder="Valor de iniciativa" min="0" max="50">
+                    <button id="add-initiative" class="cyber-btn primary">ADICIONAR</button>
+                </div>
+
+                <div class="initiative-controls">
+                    <button id="sort-initiative" class="cyber-btn secondary">ORDENAR</button>
+                    <button id="clear-initiative" class="cyber-btn secondary">LIMPAR</button>
+                    <button id="next-turn" class="cyber-btn primary">PRÓXIMO TURNO</button>
+                </div>
+
+                <div class="turn-indicator">
+                    <span>Turno Atual:</span>
+                    <span id="current-turn">-</span>
+                    <span>/</span>
+                    <span id="total-turns">0</span>
+                </div>
+
+                <div class="initiative-list" id="initiative-list">
+                    <!-- Characters will be added here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Lista de Personagens -->
+        <section id="character-list" class="content-section">
+            <div class="section-header">
+                <h2>Personagens Salvos</h2>
+                <p>Gerencie seus personagens</p>
+            </div>
+
+            <div class="character-list-panel">
+                <div id="saved-characters" class="characters-grid">
+                    <!-- Saved characters will be displayed here -->
+                </div>
+                <button id="clear-all-characters" class="cyber-btn danger">LIMPAR TODOS</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Shadowrun 6e - Sistema de Mesa Digital | Desenvolvido por MiniMax Agent</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
